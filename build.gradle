@@ -1,9 +1,9 @@
 apply plugin: 'war'
-apply plugin: 'docker'
+//apply plugin: 'docker'
 
 group = 'org.javaee7.sampl'
 version = '1.0-SNAPSHOT'
-artifact = 'javaee7-docker-gradle'
+//artifact = 'javaee7-docker-gradle'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -15,14 +15,14 @@ repositories {
 
 dependencies {
     providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
-    classpath 'se.transmode.gradle:gradle-docker:1.2'
+    compile 'se.transmode.gradle:gradle-docker:1.2'
 }
 
-task buildDocker(type: Docker) {
-    applicationName "gradle-docker"
-    addFile {
-        from jar
-        rename {'app.jar'}
-    }
-    entryPoint(['java', '-jar', '/app.jar'])
-}
+//task buildDocker(type: Docker) {
+//    applicationName "javaee-docker-gradle"
+//    addFile {
+//        from jar
+//        rename {'app.jar'}
+//    }
+//    entryPoint(['java', '-jar', '/app.jar'])
+//}
