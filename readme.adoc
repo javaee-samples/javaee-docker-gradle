@@ -1,0 +1,8 @@
+= Run Java EE 7 Application as Docker Container using Gradle
+
+This sample application shows how to package a Java EE 7 application as Docker image and run it within a container using Gradle Docker Plugin.
+
+. `gradle build` builds the application.
+. How to build the Docker image?
+
+
