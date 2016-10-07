@@ -3,6 +3,17 @@
 This sample application shows how to package a Java EE 7 application as Docker image and run it within a container using Gradle Docker Plugin.
 
 . `gradle build` builds the application.
-. How to build the Docker image?
+
+
+== Building Docker Image
+
+. Create and configure a Docker Machine as explained at http://blog.arungupta.me/docker-machine-seutp-docker-host-techtip78/[here]
+. Run `./gradlew buildImage` to create the Docker Image
+
+== Running Docker Container
+
+. Run `./gradlew startContainer` to run the Docker Container
+. Access the application `curl http://<HOST>:8080/javaee-docker-gradle/resources/persons`
+.. `<HOST>` can be found running `docker-machine ip <DOCKER MACHINE>`
 
 
