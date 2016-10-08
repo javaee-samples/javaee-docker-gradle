@@ -1,5 +1,12 @@
+group = 'org.javaee.sample'
+version = '1.0-SNAPSHOT'
+
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.docker-remote-api'
+
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
     }
 
@@ -8,32 +15,27 @@ buildscript {
     }
 }
 
-apply plugin: 'war'
-apply plugin: 'com.bmuschko.docker-remote-api'
-
-group = 'org.javaee7.sampl'
-version = '1.0-SNAPSHOT'
-//artifact = 'javaee7-docker-gradle'
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenCentral()     
-    jcenter()
-}
-
-dependencies {
-    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
-}
-
 import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer
 import com.bmuschko.gradle.docker.tasks.container.DockerStartContainer
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations {
+    dockerJava {
+        resolutionStrategy {
+            force 'de.gesellix:unix-socket-factory:2016-04-06T22-21-19'
+        }
+    }
+}
+
 docker {
-    url = 'https://192.168.99.100:2376'
-    certPath = new File(System.properties['user.home'], ".docker/machine/machines/${dockerMachineName}")
+  url = 'unix:///var/run/docker.sock'
+}
+
+dependencies {
+    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
 }
 
 task copyDockerArtifacts(type: Copy) {
@@ -51,7 +53,7 @@ task copyDockerArtifacts(type: Copy) {
 task buildImage(type: DockerBuildImage) {
     dependsOn copyDockerArtifacts
     inputDir = project.file('build/docker')
-    tag = 'javaee-samples/javaee-docker-gradle'
+    tag = 'javaee-docker-gradle'
 }
 
 task createContainer(type: DockerCreateContainer) {
