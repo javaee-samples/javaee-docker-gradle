@@ -6,7 +6,6 @@ apply plugin: 'com.bmuschko.docker-remote-api'
 
 buildscript {
     repositories {
-        mavenCentral()
         jcenter()
     }
 
